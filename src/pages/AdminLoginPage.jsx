@@ -17,7 +17,7 @@ const AdminLoginPage = () => {
     .required();
 
   const { dispatch } = React.useContext(AuthContext);
-  const  test  = React.useContext(GlobalContext);
+  const test = React.useContext(GlobalContext);
   const navigate = useNavigate();
   const {
     register,
@@ -29,31 +29,31 @@ const AdminLoginPage = () => {
   });
 
   const onSubmit = async (data) => {
-    
+
 
     try {
-			let sdk = new MkdSDK();
+      let sdk = new MkdSDK();
 
-			const response = await sdk.login(data.email, data.password,"admin");
-      
-			if (response && response.token) {
-				dispatch({ type: "LOGIN_SUCCESS", payload: response });
-        showToast(test.dispatch,'Logged in successfully!',3000)
-        
-				navigate("/admin/dashboard");
-			} else {
-				setError("password", {
-					type: "manual",
-					message: "Invalid email/password",
-				});
-			}
-		} catch (error) {
-			console.error("Login failed:", error);
-      
-			setError("password", {
-				type: "manual",
-				message: "Error logging in",
-			});
+      const response = await sdk.login(data.email, data.password, "admin");
+
+      if (response && response.token) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: response });
+        showToast(test.dispatch, 'Logged in successfully!', 3000)
+
+        navigate("/admin/dashboard");
+      } else {
+        setError("password", {
+          type: "manual",
+          message: "Invalid email/password",
+        });
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+
+      setError("password", {
+        type: "manual",
+        message: "Error logging in",
+      });
     }
   };
 
@@ -74,9 +74,8 @@ const AdminLoginPage = () => {
             type="email"
             placeholder="Email"
             {...register("email")}
-            className={`"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.email?.message ? "border-red-500" : ""
-            }`}
+            className={`"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.email?.message ? "border-red-500" : ""
+              }`}
           />
           <p className="text-red-500 text-xs italic">{errors.email?.message}</p>
         </div>
@@ -92,9 +91,8 @@ const AdminLoginPage = () => {
             type="password"
             placeholder="******************"
             {...register("password")}
-            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.password?.message ? "border-red-500" : ""
-            }`}
+            className={`shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${errors.password?.message ? "border-red-500" : ""
+              }`}
           />
           <p className="text-red-500 text-xs italic">
             {errors.password?.message}
@@ -108,7 +106,7 @@ const AdminLoginPage = () => {
           />
         </div>
       </form>
-      
+
     </div>
   );
 };

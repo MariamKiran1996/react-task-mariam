@@ -23,40 +23,40 @@ const jsonObjects = [
 const JSONObject = ({ id, title, username, photo, like, index }) => {
 	const [{ isDragging }, dragRef] = useDrag(() => ({
 		type: jsonObjectType,
-		item: { id, index,source: "DRAGGED_ITEM" },
+		item: { id, index, source: "DRAGGED_ITEM" },
 		collect: (monitor) => ({
 			isDragging: !!monitor.isDragging(),
 		}),
 	}));
 
 	return (
-		
-			<tr key={id} ref={dragRef}
+
+		<tr key={id} ref={dragRef}
 			style={{
 				// opacity: isDragging ? 0.5 : 1,
 				cursor: "move",
 			}}>
-				<td>{id}</td>
-				<td>
-					{" "}
-					<div>
-						<img src={photo}></img> {title}
-					</div>
-				</td>
-				<td>
-					<div>
-						<img src={Ninja}></img>
-						{username}
-					</div>
-				</td>
-				<td>
-					<div>
-						{like}
-						<img src={Arrow}></img>
-					</div>
-				</td>
-			</tr>
-		
+			<td>{id}</td>
+			<td>
+				{" "}
+				<div>
+					<img src={photo}></img> {title}
+				</div>
+			</td>
+			<td>
+				<div>
+					<img src={Ninja}></img>
+					{username}
+				</div>
+			</td>
+			<td>
+				<div>
+					{like}
+					<img src={Arrow}></img>
+				</div>
+			</td>
+		</tr>
+
 	);
 };
 
@@ -68,26 +68,26 @@ const JSONList = ({ jsonObjects }) => {
 			setData(jsonObjects);
 		}
 	}, [jsonObjects]);
-	
+
 	const [{ canDrop, isOver }, dropRef] = useDrop(() => ({
 		accept: jsonObjectType,
-		canDrop:(item, monitor)=>{
-console.log(monitor.getItem(),"monitor.getItem()")
-		},  hover(item, monitor) {
+		canDrop: (item, monitor) => {
+			console.log(monitor.getItem(), "monitor.getItem()")
+		}, hover(item, monitor) {
 			if (!ref.current) {
-			  return;
+				return;
 			}
 			const dragIndex = item.index;
 			const hoverIndex = getIndex(ref.current);
 			if (dragIndex === hoverIndex) {
-			  return;
+				return;
 			}
 			moveItem(dragIndex, hoverIndex);
 			item.index = hoverIndex;
-		  },
+		},
 		drop: (item, monitor) => {
 			// Handle drop logic here
-			console.log(monitor.getDropResult(), "monitor",monitor.didDrop());
+			console.log(monitor.getDropResult(), "monitor", monitor.didDrop());
 			let newList = [...jsonObjects];
 
 			const toIndex = 2;
@@ -98,7 +98,7 @@ console.log(monitor.getItem(),"monitor.getItem()")
 			console.log("Dropped JSON object:", item);
 		},
 		collect: (monitor) => ({
-			
+
 			canDrop: !!monitor.canDrop(),
 			isOver: !!monitor.isOver(),
 		}),
@@ -112,13 +112,13 @@ console.log(monitor.getItem(),"monitor.getItem()")
 		newItems.splice(hoverIndex, 0, draggedItem);
 		// Update the state with the new array
 		console.log
-		
-	  };
+
+	};
 	const getIndex = (node) => {
 		const index = [...node.parentNode.children].indexOf(node);
 		console.log("index", index);
 		return index;
-	  };
+	};
 
 	return (
 		<div
@@ -139,7 +139,7 @@ console.log(monitor.getItem(),"monitor.getItem()")
 					</tr>
 				</thead>
 				<tbody>
-					{data.length>0 &&
+					{data.length > 0 &&
 						data.map((jsonObject, index) => (
 							<JSONObject key={jsonObject.id} {...jsonObject} index={index} />
 						))}
@@ -294,7 +294,7 @@ const AdminDashboardPage = () => {
 							disabled={data?.currentPage === 1}
 							onClick={() => setPage((prevPage) => prevPage - 1)}
 							class='mx-2 px-2 py-1 bg-gray-300 text-gray-800 rounded-lg'
-							style={{width:'100px'}}
+							style={{ width: '100px' }}
 						>
 							Previous
 						</button>
@@ -303,24 +303,24 @@ const AdminDashboardPage = () => {
 							disabled={data?.currentPage === data?.pages}
 							onClick={() => setPage((prevPage) => prevPage + 1)}
 							class='mx-2 px-2 py-1 bg-gray-300 text-gray-800 rounded-lg'
-							style={{width:'100px'}}
+							style={{ width: '100px' }}
 						>
 							Next
 						</button>
 					</div>
 					<div class='flex items-center justify-center'>
-					<div class='ml-4 text-gray-600'>
-						<span class='mr-1'>Total Pages:</span>
-						<span>{data && data?.pages}</span>
-					</div>
-					<div class='ml-4 text-gray-600'>
-						<span class='mr-1'>Current Page:</span>
-						<span>{data && data?.currentPage}</span>
-					</div>
-					<div class='ml-4 text-gray-600'>
-						<span class='mr-1'>Total Items:</span>
-						<span>{data && data?.total}</span>
-					</div>
+						<div class='ml-4 text-gray-600'>
+							<span class='mr-1'>Total Pages:</span>
+							<span>{data && data?.pages}</span>
+						</div>
+						<div class='ml-4 text-gray-600'>
+							<span class='mr-1'>Current Page:</span>
+							<span>{data && data?.currentPage}</span>
+						</div>
+						<div class='ml-4 text-gray-600'>
+							<span class='mr-1'>Total Items:</span>
+							<span>{data && data?.total}</span>
+						</div>
 					</div>
 				</div>
 			</div>
